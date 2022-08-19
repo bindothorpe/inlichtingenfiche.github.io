@@ -1,0 +1,50 @@
+@media (max-width: 576px) {
+  #logo {
+    width: 18vw;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    left: 80vw;
+    top: 2vh;
+    display: inline-block;
+  }
+}
+
+/* sm */
+@media (min-width: 576px) {
+  #logo {
+    width: 14vw;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    left: 84vw;
+    top: 2vh;
+    display: inline-block;
+  }
+}
+
+/* md */
+@media (min-width: 768px) {
+  #logo {
+    width: 12vw;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    left: 76vw;
+    top: 14vh;
+    display: inline-block;
+  }
+}
+
+/* lg */
+@media (min-width: 992px) {
+  #logo {
+    width: 10vw;
+    height: auto;
+    position: absolute;
+    z-index: 10;
+    left: 78vw;
+    top: 16vh;
+    display: inline-block;
+  }
+}

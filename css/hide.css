@@ -1,0 +1,43 @@
+:root {
+  --blue: #3468aa;
+  --indigo: #131e55;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #e2ac3c;
+  --green: #1f4d54;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #131e55;
+  --secondary: #3468aa;
+  --success: #1f4d54;
+  --info: #17a2b8;
+  --warning: #e2ac3c;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --coral: #e17a66;
+  --green: #1f4d54;
+  --yellow: #e2ac3c;
+  --beige: #f4f3f0;
+  --white: #fff;
+}
+
+.animation-start {
+  overflow: hidden;
+  animation: slide-down 1s;
+}
+
+@keyframes slide-down {
+  from {
+    height: 0px;
+  }
+
+  to {
+    height: 100%;
+  }
+}
