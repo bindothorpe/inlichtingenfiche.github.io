@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/hide.css" />
     <link rel="stylesheet" href="./css/logo.css" />
+    <link rel="stylesheet" href="./css/interaction.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="./libs/jSignature.min.js"></script>
@@ -301,20 +302,25 @@
               <div class="row">
                 <div class="col col-12 col-sm-12 col-md-12 col-lg-12">
                   <label class="form-check-label" for="kind_geslacht_boolean">
-                    Is je kindje een jongen of een meisje?*
+                    Geslacht*
                   </label>
                 </div>
                 <div class="col col-12 col-sm-3 col-md-3 col-lg-3">
                   <div class="form-group">
-                    <select
-                      id="kind_geslacht_boolean"
-                      class="form-control droplist_instapdatum date-droplist-month"
-                      name="kind_geslacht_boolean"
-                      required
-                    >
-                      <option value="">---</option>
-                      <option value="jongen">Jongen</option>
-                      <option value="meisje">Meisje</option>
+                    <input
+                      type="radio"
+                      name="kind_geslacht"
+                      id="kind_geslacht_jongen"
+                    />
+                    <label for="kind_geslacht_jongen">Jongen</label>
+                    <div></div>
+                    <input
+                      type="radio"
+                      name="kind_geslacht"
+                      id="kind_geslacht_meisje"
+                    />
+                    <label for="kind_geslacht_meisje">Meisje</label>
+                    
                     </select>
                   </div>
                 </div>
@@ -1595,7 +1601,7 @@
                   </div>
                 </div>
                 <div class="row align-items-end">
-                  <div class="col col-1 col-sm-1 col-md-1 col-lg-1">
+                  <div class="col col-2 col-sm-2 col-md-2 col-lg-2">
                     <div class="form-group">
                       <input
                         class="form-control"
