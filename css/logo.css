@@ -17,7 +17,7 @@
     height: auto;
     position: absolute;
     z-index: 10;
-    left: 84vw;
+    left: 84%;
     top: 2vh;
     display: inline-block;
   }
@@ -30,7 +30,7 @@
     height: auto;
     position: absolute;
     z-index: 10;
-    left: 76vw;
+    left: 76%;
     top: 14vh;
     display: inline-block;
   }
@@ -43,7 +43,7 @@
     height: auto;
     position: absolute;
     z-index: 10;
-    left: 78vw;
+    left: 78%;
     top: 16vh;
     display: inline-block;
   }
