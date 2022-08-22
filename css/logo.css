@@ -2,7 +2,7 @@
   #logo {
     width: 18vw;
     height: auto;
-    position: fixed;
+    position: absolute;
     z-index: 10;
     left: 80%;
     top: 2vh;
@@ -15,7 +15,7 @@
   #logo {
     width: 14vw;
     height: auto;
-    position: fixed;
+    position: absolute;
     z-index: 10;
     left: 84vw;
     top: 2vh;
@@ -28,7 +28,7 @@
   #logo {
     width: 12vw;
     height: auto;
-    position: fixed;
+    position: absolute;
     z-index: 10;
     left: 76vw;
     top: 14vh;
@@ -41,7 +41,7 @@
   #logo {
     width: 10vw;
     height: auto;
-    position: fixed;
+    position: absolute;
     z-index: 10;
     left: 78vw;
     top: 16vh;
