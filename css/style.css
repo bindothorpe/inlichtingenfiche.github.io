@@ -1221,6 +1221,13 @@ button::-moz-focus-inner,
   padding: 0;
   border-style: none;
 }
+
+input[type="radio"] {
+  border: 0px;
+  width: 1.5em;
+  height: 1.5em;
+}
+
 input[type="radio"],
 input[type="checkbox"] {
   box-sizing: border-box;
@@ -3000,6 +3007,11 @@ pre code {
   float: right;
   margin-top: 1em;
   border: none;
+}
+
+.btn-correct {
+  text-align: center !important;
+  -webkit-align-items: center !important;
 }
 
 .reset:hover {

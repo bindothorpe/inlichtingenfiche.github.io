@@ -1,3 +1,8 @@
+import { createAndDownloadXmlFile } from "./createXmlFile.js";
+import { hide } from "./hider.js";
+import { createAndDownloadPdf } from "./pdf.js";
+import { thankYouScreenToHTML } from "./thankYouScreen.js";
+
 const emptySlash = function (input) {
   if (input.trim()) {
     return input.trim();
@@ -157,6 +162,9 @@ const betaling_domiciliering_boolean = document.getElementById(
 const iban = document.getElementById("iban");
 const bic = document.getElementById("bic");
 
+// signature
+const jSignature = document.getElementById("signature");
+
 $(document).ready(function () {
   // TODO: Check als alles ingevuld is
 
@@ -167,7 +175,6 @@ $(document).ready(function () {
   let arr = [
     kind_voornaam,
     kind_naam,
-    kind_geslacht_boolean,
     kind_geboortedatum_dag,
     kind_geboortedatum_maand,
     kind_geboortedatum_jaar,
@@ -198,6 +205,7 @@ $(document).ready(function () {
     kind_beeldmateriaal_extern_boolean,
     kind_prematuur_boolean,
     betaling_domiciliering_boolean,
+    jSignature,
   ];
 
   // Registreer een event zodat wanneer een veld aangepast wordt maar niet correct
@@ -206,141 +214,182 @@ $(document).ready(function () {
 
   // Verstuur button to create and download the excel file
   $("#btn_verstuur").click(function () {
-    console.log("btn clicked");
-
     if (isFieldRequiredAndEmpty(arr)) {
-      console.log("Niet ingevuld");
+      hide();
       return;
     }
 
-    // Data voor excel file opmaken
-    var data = [
-      [
-        iban.value,
-        bic.value,
-        kind_naam.value,
-        kind_voornaam.value,
-        getSelectText(kind_geslacht_boolean),
-        kind_rijksregisternummer.value,
-        kind_geboortedatum_dag.value,
-        kind_geboortedatum_maand.value,
-        kind_geboortedatum_jaar.value,
-        kind_geboorteplaats.value,
-        kind_taal.value,
-        getSelectText(kind_medicatie_boolean),
-        emptySlash(kind_medicatie1_naam.value),
-        emptySlash(kind_medicatie1_schema.value),
-        emptySlash(kind_medicatie2_naam.value),
-        emptySlash(kind_medicatie2_schema.value),
-        getSelectText(kind_koortswerend_boolean),
-        getSelectText(kind_speciale_zorgen_boolean),
-        emptySlash(kind_speciale_zorgen_naam.value),
-        getSelectText(kind_alergieen_boolean),
-        emptySlash(kind_alergieen_naam.value),
-        emptySlash(kind_alergieen_behandeling.value),
-        huisarts_naam.value,
-        huisarts_adres.value,
-        huisarts_telefoon.value,
-        getSelectText(kind_kinderziektes_boolean),
-        emptySlash(kind_kinderziektes_naam.value),
-        getSelectText(kind_voedingsgewoontes_boolean),
-        emptySlash(kind_voedingsgewoontes.value),
-        getSelectText(kind_slapen_knuffel_boolean),
-        getSelectText(kind_slapen_knuffel_boolean),
-        kind_slapen_zij.value,
-        kind_slapen_buik.value,
-        kind_slapen_rug.value,
-        getSelectText(kind_slapen_speciaal_boolean),
-        emptySlash(kind_slaap_speciaal_lijst.value),
-        nood_naam.value,
-        nood_voornaam.value,
-        nood_verwantschap.value,
-        nood_telefoon.value,
-        emptySlash(afhalen1_naam.value),
-        emptySlash(afhalen1_voornaam.value),
-        emptySlash(afhalen1_verwantschap.value),
-        emptySlash(afhalen1_telefoon.value),
-        emptySlash(afhalen2_naam.value),
-        emptySlash(afhalen2_voornaam.value),
-        emptySlash(afhalen2_verwantschap.value),
-        emptySlash(afhalen2_telefoon.value),
-        emptySlash(afhalen3_naam.value),
-        emptySlash(afhalen3_voornaam.value),
-        emptySlash(afhalen3_verwantschap.value),
-        emptySlash(afhalen3_telefoon.value),
-        emptySlash(afhalen_niet_naam.value),
-        emptySlash(kind_troosten.value),
-        emptySlash(kind_troosten_woorden.value),
-        emptySlash(kind_troosten_wanneer.value),
-        emptySlash(bijzonderheden_gezin_naam.value),
-        getSelectText(kind_prematuur_boolean),
-        getSelectText(kind_op_stap_boolean),
-        getSelectText(kind_vervoeren_boolean),
-        getSelectText(kind_beeldmateriaal_intern_boolean),
-        getSelectText(kind_beeldmateriaal_extern_boolean),
-        emptySlash(kind_opmerking.value),
-      ],
-    ];
+    // DIT ZOU ALLEMAAL OP DE BACKEND MOETEN GEBEUREN
+    createAndDownloadPdf(
+      kind_voornaam.value,
+      kind_naam.value,
+      kind_geboortedatum_dag.value,
+      kind_geboortedatum_maand.value,
+      kind_geboortedatum_jaar.value,
+      getGeslacht(),
+      getSelectText(kind_prematuur_boolean),
+      kind_rijksregisternummer.value,
+      kind_geboorteplaats.value,
+      kind_taal.value,
+      nood_naam.value,
+      nood_voornaam.value,
+      nood_verwantschap.value,
+      nood_telefoon.value,
+      emptySlash(afhalen1_naam.value),
+      emptySlash(afhalen1_voornaam.value),
+      emptySlash(afhalen1_verwantschap.value),
+      emptySlash(afhalen1_telefoon.value),
+      emptySlash(afhalen2_naam.value),
+      emptySlash(afhalen2_voornaam.value),
+      emptySlash(afhalen2_verwantschap.value),
+      emptySlash(afhalen2_telefoon.value),
+      emptySlash(afhalen3_naam.value),
+      emptySlash(afhalen3_voornaam.value),
+      emptySlash(afhalen3_verwantschap.value),
+      emptySlash(afhalen3_telefoon.value),
+      emptySlash(afhalen_niet_naam.value),
+      huisarts_naam.value,
+      huisarts_adres.value,
+      huisarts_telefoon.value,
+      emptySlash(kind_medicatie1_naam.value),
+      emptySlash(kind_medicatie1_schema.value),
+      emptySlash(kind_medicatie2_naam.value),
+      emptySlash(kind_medicatie2_schema.value),
+      emptySlash(kind_alergieen_naam.value),
+      emptySlash(kind_alergieen_behandeling.value),
+      emptySlash(kind_kinderziektes_naam.value),
+      emptySlash(kind_speciale_zorgen_naam.value),
+      getSelectText(kind_koortswerend_boolean),
+      emptySlash(bijzonderheden_gezin_naam.value),
+      getSelectText(kind_slapen_knuffel_boolean),
+      getSelectText(kind_slapen_knuffel_boolean),
+      kind_slapen_zij.value,
+      kind_slapen_buik.value,
+      kind_slapen_rug.value,
+      emptySlash(kind_slaap_speciaal_lijst.value),
+      emptySlash(kind_troosten.value),
+      emptySlash(kind_troosten_woorden.value),
+      emptySlash(kind_troosten_wanneer.value),
+      emptySlash(kind_opmerking.value),
+      getSelectText(kind_op_stap_boolean),
+      getSelectText(kind_vervoeren_boolean),
+      getSelectText(kind_beeldmateriaal_intern_boolean),
+      getSelectText(kind_beeldmateriaal_extern_boolean),
+      emptySlash(iban.value),
+      emptySlash(bic.value)
+    );
 
-    // Create the workbook
-    var workbook = XLSX.utils.book_new();
+    // DIT ZOU ALLEMAAL OP DE BACKEND MOETEN GEBEUREN
+    createAndDownloadXmlFile(
+      emptySlash(iban.value),
+      emptySlash(bic.value),
+      kind_naam.value,
+      kind_voornaam.value,
+      getGeslacht(),
+      kind_rijksregisternummer.value,
+      kind_geboortedatum_dag.value,
+      kind_geboortedatum_maand.value,
+      kind_geboortedatum_jaar.value,
+      kind_geboorteplaats.value,
+      kind_taal.value,
+      getSelectText(kind_medicatie_boolean),
+      emptySlash(kind_medicatie1_naam.value),
+      emptySlash(kind_medicatie1_schema.value),
+      emptySlash(kind_medicatie2_naam.value),
+      emptySlash(kind_medicatie2_schema.value),
+      getSelectText(kind_koortswerend_boolean),
+      getSelectText(kind_speciale_zorgen_boolean),
+      emptySlash(kind_speciale_zorgen_naam.value),
+      getSelectText(kind_alergieen_boolean),
+      emptySlash(kind_alergieen_naam.value),
+      emptySlash(kind_alergieen_behandeling.value),
+      huisarts_naam.value,
+      huisarts_adres.value,
+      huisarts_telefoon.value,
+      getSelectText(kind_kinderziektes_boolean),
+      emptySlash(kind_kinderziektes_naam.value),
+      getSelectText(kind_voedingsgewoontes_boolean),
+      emptySlash(kind_voedingsgewoontes.value),
+      getSelectText(kind_slapen_knuffel_boolean),
+      getSelectText(kind_slapen_knuffel_boolean),
+      kind_slapen_zij.value,
+      kind_slapen_buik.value,
+      kind_slapen_rug.value,
+      getSelectText(kind_slapen_speciaal_boolean),
+      emptySlash(kind_slaap_speciaal_lijst.value),
+      nood_naam.value,
+      nood_voornaam.value,
+      nood_verwantschap.value,
+      nood_telefoon.value,
+      emptySlash(afhalen1_naam.value),
+      emptySlash(afhalen1_voornaam.value),
+      emptySlash(afhalen1_verwantschap.value),
+      emptySlash(afhalen1_telefoon.value),
+      emptySlash(afhalen2_naam.value),
+      emptySlash(afhalen2_voornaam.value),
+      emptySlash(afhalen2_verwantschap.value),
+      emptySlash(afhalen2_telefoon.value),
+      emptySlash(afhalen3_naam.value),
+      emptySlash(afhalen3_voornaam.value),
+      emptySlash(afhalen3_verwantschap.value),
+      emptySlash(afhalen3_telefoon.value),
+      emptySlash(afhalen_niet_naam.value),
+      emptySlash(kind_troosten.value),
+      emptySlash(kind_troosten_woorden.value),
+      emptySlash(kind_troosten_wanneer.value),
+      emptySlash(bijzonderheden_gezin_naam.value),
+      getSelectText(kind_prematuur_boolean),
+      getSelectText(kind_op_stap_boolean),
+      getSelectText(kind_vervoeren_boolean),
+      getSelectText(kind_beeldmateriaal_intern_boolean),
+      getSelectText(kind_beeldmateriaal_extern_boolean),
+      emptySlash(kind_opmerking.value),
+      getSignature()
+    );
 
-    // Create the worksheet with the data we created.
-    var worksheet = XLSX.utils.aoa_to_sheet(data);
-
-    // Put the worksheet we created on the workbook and give it a name.
-    workbook.SheetNames.push("First");
-    workbook.Sheets["First"] = worksheet;
-
-    var xlsbin = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "binary",
-    });
-
-    const buffer = new ArrayBuffer(xlsbin.length);
-    const array = new Uint8Array(buffer);
-
-    for (var i = 0; i < xlsbin.length; i++) {
-      array[i] = xlsbin.charCodeAt(i) & 0xff;
-    }
-    var xlsblob = new Blob([buffer], { type: "application/octet-stream" });
-
-    // Force the download and give it a name.
-    const url = window.URL.createObjectURL(xlsblob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `${document.getElementById("kind_naam").value}_${
-      document.getElementById("kind_voornaam").value
-    }.xlsx`;
-    anchor.click();
-    window.URL.revokeObjectURL(url);
+    thankYouScreenToHTML();
   });
 });
 
+function getGeslacht() {
+  return document.querySelector('input[name="kind_geslacht"]:checked').value;
+}
+
 function inputChangeError(array) {
   array.forEach((field) => {
-    field.oninput = (e) => {
-      if (!field.value || !field.value.trim()) {
-        field.classList.add("error_empty");
-      } else {
-        if (field.classList.contains("error_empty")) {
-          field.classList.remove("error_empty");
+    if (field === undefined || field.id === "jSignature") {
+    } else {
+      field.oninput = (e) => {
+        if (!field.value || !field.value.trim()) {
+          field.classList.add("error_empty");
+        } else {
+          if (field.classList.contains("error_empty")) {
+            field.classList.remove("error_empty");
+          }
         }
-      }
-    };
+      };
 
-    field.addEventListener("focusout", (e) => {
-      if (!field.value || !field.value.trim()) {
-        field.classList.add("error_empty");
-      }
-    });
+      field.addEventListener("focusout", (e) => {
+        if (!field.value || !field.value.trim()) {
+          field.classList.add("error_empty");
+        }
+      });
+    }
   });
 }
 
 function isFieldRequiredAndEmpty(fields) {
   let field;
   fields.forEach((f) => {
-    if (f.tagname === "SELECT") {
+    if (f.id === "signature") {
+      if ($("#signature").jSignature("getData", "native").length == 0) {
+        if (!field) field = f;
+        f.classList.add("error_empty");
+        $("#signature").bind("change", function (e) {
+          f.classList.remove("error_empty");
+        });
+      }
+    } else if (f.tagname === "SELECT") {
       if (f.required && !getSelectText(f)) {
         if (!field) field = f;
         f.classList.add("error_empty");
@@ -361,7 +410,7 @@ function isFieldRequiredAndEmpty(fields) {
     }
   });
 
-  if (field && field.required) {
+  if (field) {
     if (!field.value) {
       field.focus();
       return true;
@@ -378,4 +427,9 @@ function setupSignature() {
   $("#btn_clear").click(function () {
     $("#signature").jSignature("clear");
   });
+}
+
+function getSignature() {
+  var datapair = $("#signature").jSignature("getData", "svgbase64");
+  return "data:" + datapair.join(",");
 }

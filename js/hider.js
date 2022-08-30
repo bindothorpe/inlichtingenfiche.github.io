@@ -15,25 +15,29 @@ const boolean_array = [
   document.getElementById("betaling_domiciliering_boolean"),
 ];
 
-boolean_array.forEach((e) => {
-  // When the user changes the value
-  e.onchange = () => {
-    // Get the element that has to be hidden / shown
-    const hider = document.getElementById(e.dataset.hider);
-    // If the option is "Ja": show the element that was hidden
-    if (e.value === "ja") {
-      if (hider.classList.contains("hide")) {
-        hider.classList.remove("hide");
-      }
+export function hide() {
+  boolean_array.forEach((e) => {
+    // When the user changes the value
+    e.onchange = () => {
+      // Get the element that has to be hidden / shown
+      const hider = document.getElementById(e.dataset.hider);
+      // If the option is "Ja": show the element that was hidden
+      if (e.value === "ja") {
+        if (hider.classList.contains("hide")) {
+          hider.classList.remove("hide");
+        }
 
-      // In any other case hide the element
-    } else {
-      if (!hider.classList.contains("hide")) {
-        hider.classList.add("hide");
+        // In any other case hide the element
+      } else {
+        if (!hider.classList.contains("hide")) {
+          hider.classList.add("hide");
+        }
       }
-    }
-  };
-});
+    };
+  });
+}
+
+hide();
 
 // const kind_allerg = document.getElementById("kind_alergieen_boolean");
 // hideAndShow(kind_allerg, allergieen, "hider_allergieen");
